@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Astryxiation.exe</title>
+
+  <style>
+    /* =========================================================
+       COLOURS
+       ========================================================= */
+
+    :root {
+      --pink: #ff2da6;
+      --pink2: #ff006e;
+      --cyan: #00f6ff;
+      --purple: #9d00ff;
+      --yellow: #ffe600;
+
+      --black: #05050a;
+      --dark: #0d0814;
+      --panel: rgba(18, 8, 30, 0.82);
+
+      --text: #fff7ff;
+      --muted: #bbaac8;
+    }
+
+
+    /* =========================================================
+       RESET
+       ========================================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+
+      font-family: "Courier New", monospace;
+
+      color: var(--text);
+      background: var(--black);
+    }
+
+
+    /* =========================================================
+       ANIMATED BACKGROUND
+       ========================================================= */
+
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      z-index: -5;
+
+      background:
+        radial-gradient(
+          circle at 50% 15%,
+          rgba(255, 45, 166, 0.28),
+          transparent 35%
+        ),
+
+        radial-gradient(
+          circle at 15% 60%,
+          rgba(0, 246, 255, 0.15),
+          transparent 35%
+        ),
+
+        radial-gradient(
+          circle at 90% 75%,
+          rgba(157, 0, 255, 0.18),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          180deg,
+          #14051c,
+          #08040d 55%,
+          #030305
+        );
+    }
+
+
+    /* =========================================================
+       RETRO GRID
+       ========================================================= */
+
+    .retro-grid {
+      position: fixed;
+
+      left: -50%;
+      right: -50%;
+      bottom: -30vh;
+
+      height: 70vh;
+
+      z-index: -4;
+
+      background-image:
+        linear-gradient(
+          rgba(0, 246, 255, 0.18) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(255, 45, 166, 0.18) 1px,
+          transparent 1px
+        );
+
+      background-size: 70px 50px;
+
+      transform:
+        perspective(300px)
+        rotateX(65deg);
+
+      animation:
+        gridMove 3s linear infinite;
+    }
+
+    @keyframes gridMove {
+
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 0 50px;
+      }
+
+    }
+
+
+    /* =========================================================
+       SCANLINES / VHS OVERLAY
+       ========================================================= */
+
+    .scanlines {
+      position: fixed;
+      inset: 0;
+
+      pointer-events: none;
+
+      z-index: 100;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 3px,
+          rgba(0, 0, 0, 0.17) 4px
+        );
+
+      mix-blend-mode: multiply;
+    }
+
+
+    .noise {
+      position: fixed;
+      inset: 0;
+
+      pointer-events: none;
+
+      z-index: 99;
+
+      opacity: 0.035;
+
+      background-image:
+        url("https://www.transparenttextures.com/patterns/noise-lines.png");
+    }
+
+
+    /* =========================================================
+       PAGE
+       ========================================================= */
+
+    .page {
+      width: min(900px, 92%);
+
+      margin: auto;
+
+      padding-bottom: 120px;
+    }
+
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      position: relative;
+    }
+
+
+    /* =========================================================
+       SUN
+       ========================================================= */
+
+    .sun {
+      position: absolute;
+
+      width: 420px;
+      height: 420px;
+
+      border-radius: 50%;
+
+      z-index: -1;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #ffe600,
+          #ff7a00 40%,
+          #ff006e 70%,
+          #9d00ff
+        );
+
+      filter:
+        blur(1px)
+        drop-shadow(0 0 50px rgba(255, 0, 110, 0.55));
+
+      opacity: 0.7;
+
+      animation:
+        sunPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes sunPulse {
+
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+    }
+
+
+    /* =========================================================
+       PROFILE IMAGE
+       ========================================================= */
+
+    .avatar-wrap {
+      position: relative;
+
+      width: 170px;
+      height: 170px;
+
+      margin-bottom: 28px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+
+      border: 4px solid var(--cyan);
+
+      box-shadow:
+        0 0 15px var(--cyan),
+        0 0 35px rgba(0, 246, 255, 0.5),
+        8px 8px 0 var(--pink);
+
+      animation:
+        avatarFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes avatarFloat {
+
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+
+    }
+
+
+    /* =========================================================
+       GLITCH TITLE
+       ========================================================= */
+
+    .glitch {
+      position: relative;
+
+      font-size: clamp(3rem, 10vw, 7rem);
+
+      font-weight: 900;
+
+      letter-spacing: -6px;
+
+      text-transform: uppercase;
+
+      color: white;
+
+      text-shadow:
+        5px 0 var(--pink),
+        -5px 0 var(--cyan),
+        0 0 30px var(--pink);
+
+      animation:
+        titleFlicker 5s infinite;
+    }
+
+    @keyframes titleFlicker {
+
+      0%, 95%, 100% {
+        transform: translate(0);
+      }
+
+      96% {
+        transform: translate(-4px, 2px);
+      }
+
+      97% {
+        transform: translate(5px, -2px);
+      }
+
+      98% {
+        transform: translate(-2px, 1px);
+      }
+
+    }
+
+
+    /* =========================================================
+       USERNAME
+       ========================================================= */
+
+    .username {
+      margin-top: 8px;
+
+      color: var(--cyan);
+
+      font-size: 1.1rem;
+
+      letter-spacing: 5px;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        0 0 10px var(--cyan);
+    }
+
+
+    /* =========================================================
+       HERO BIO
+       ========================================================= */
+
+    .hero-bio {
+      max-width: 600px;
+
+      margin-top: 25px;
+
+      line-height: 1.8;
+
+      color: #f0dff5;
+
+      background: rgba(0, 0, 0, 0.55);
+
+      padding: 15px 20px;
+
+      border-left: 3px solid var(--pink);
+      border-right: 3px solid var(--cyan);
+    }
+
+
+    /* =========================================================
+       SCROLL INDICATOR
+       ========================================================= */
+
+    .scroll {
+      position: absolute;
+
+      bottom: 40px;
+
+      color: var(--pink);
+
+      letter-spacing: 4px;
+
+      font-size: 0.8rem;
+
+      animation:
+        scrollBounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollBounce {
+
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+
+    }
+
+
+    /* =========================================================
+       SECTION TITLES
+       ========================================================= */
+
+    .section-title {
+      font-size: clamp(2rem, 7vw, 4rem);
+
+      margin-bottom: 30px;
+
+      text-transform: uppercase;
+
+      color: white;
+
+      font-style: italic;
+
+      text-shadow:
+        4px 4px 0 var(--pink),
+        -2px -2px 0 var(--cyan);
+    }
+
+
+    /* =========================================================
+       CARDS
+       ========================================================= */
+
+    .card {
+      position: relative;
+
+      padding: 30px;
+
+      margin-bottom: 35px;
+
+      background: var(--panel);
+
+      border:
+        1px solid rgba(255, 45, 166, 0.5);
+
+      box-shadow:
+        8px 8px 0 rgba(255, 45, 166, 0.25),
+        -5px -5px 0 rgba(0, 246, 255, 0.1),
+        0 0 40px rgba(157, 0, 255, 0.15);
+
+      backdrop-filter: blur(12px);
+
+      transition:
+        transform 0.3s,
+        box-shadow 0.3s,
+        border 0.3s;
+    }
+
+    .card:hover {
+      transform:
+        translateY(-7px)
+        rotate(-0.5deg);
+
+      border-color: var(--cyan);
+
+      box-shadow:
+        12px 12px 0 rgba(255, 45, 166, 0.35),
+        -7px -7px 0 rgba(0, 246, 255, 0.2),
+        0 0 50px rgba(0, 246, 255, 0.15);
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+
+      color: var(--pink);
+
+      text-transform: uppercase;
+
+      letter-spacing: 3px;
+    }
+
+    .card p {
+      line-height: 1.8;
+
+      color: var(--muted);
+    }
+
+
+    /* =========================================================
+       SCROLL ANIMATIONS
+       ========================================================= */
+
+    .reveal {
+      opacity: 0;
+
+      transform:
+        translateY(80px)
+        scale(0.95);
+
+      filter: blur(8px);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        filter 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+
+      transform:
+        translateY(0)
+        scale(1);
+
+      filter: blur(0);
+    }
+
+
+    .reveal-left {
+      opacity: 0;
+
+      transform:
+        translateX(-120px)
+        rotate(-3deg);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    .reveal-left.active {
+      opacity: 1;
+
+      transform:
+        translateX(0)
+        rotate(0);
+    }
+
+
+    .reveal-right {
+      opacity: 0;
+
+      transform:
+        translateX(120px)
+        rotate(3deg);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    .reveal-right.active {
+      opacity: 1;
+
+      transform:
+        translateX(0)
+        rotate(0);
+    }
+
+
+    /* =========================================================
+       LINKS
+       ========================================================= */
+
+    .links {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 15px;
+    }
+
+    .link {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 18px 20px;
+
+      color: white;
+
+      text-decoration: none;
+
+      text-transform: uppercase;
+
+      font-weight: bold;
+
+      letter-spacing: 2px;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(255, 45, 166, 0.12),
+          rgba(0, 246, 255, 0.07)
+        );
+
+      border: 1px solid var(--pink);
+
+      transition: 0.25s;
+    }
+
+    .link::before {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      left: -120%;
+
+      width: 100%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,0.3),
+          transparent
+        );
+
+      transition: 0.5s;
+    }
+
+    .link:hover::before {
+      left: 120%;
+    }
+
+    .link:hover {
+      color: #050505;
+
+      background: var(--pink);
+
+      transform:
+        translateX(8px);
+
+      box-shadow:
+        0 0 15px var(--pink),
+        0 0 35px rgba(255,45,166,0.5);
+    }
+
+
+    /* =========================================================
+       INTEREST TAGS
+       ========================================================= */
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 9px 14px;
+
+      border: 1px solid var(--cyan);
+
+      color: var(--cyan);
+
+      background:
+        rgba(0, 246, 255, 0.05);
+
+      box-shadow:
+        0 0 10px rgba(0,246,255,0.1);
+
+      transition: 0.25s;
+    }
+
+    .tag:hover {
+      background: var(--cyan);
+
+      color: #050505;
+
+      transform:
+        rotate(-3deg)
+        scale(1.1);
+
+      box-shadow:
+        0 0 20px var(--cyan);
+    }
+
+
+    /* =========================================================
+       TWO COLUMN LAYOUT
+       ========================================================= */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 25px;
+    }
+
+
+    /* =========================================================
+       MUSIC
+       ========================================================= */
+
+    .music {
+      display: flex;
+
+      align-items: center;
+
+      gap: 20px;
+    }
+
+    .album {
+      width: 110px;
+      height: 110px;
+
+      object-fit: cover;
+
+      border: 2px solid var(--cyan);
+
+      box-shadow:
+        6px 6px 0 var(--pink);
+    }
+
+    .music-info h3 {
+      font-size: 1.4rem;
+
+      color: white;
+
+      margin-bottom: 7px;
+    }
+
+    .music-info span {
+      color: var(--cyan);
+    }
+
+
+    /* =========================================================
+       PROJECTS
+       ========================================================= */
+
+    .project {
+      padding: 20px 0;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.1);
+    }
+
+    .project:last-child {
+      border-bottom: none;
+    }
+
+    .project strong {
+      display: block;
+
+      color: var(--yellow);
+
+      margin-bottom: 7px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================================================
+       STATUS BOX
+       ========================================================= */
+
+    .status {
+      margin-top: 20px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 10px 15px;
+
+      border: 1px solid var(--cyan);
+
+      background: rgba(0,0,0,0.6);
+
+      color: var(--cyan);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: var(--cyan);
+
+      box-shadow:
+        0 0 10px var(--cyan);
+
+      animation:
+        statusPulse 1s infinite alternate;
+    }
+
+    @keyframes statusPulse {
+
+      from {
+        opacity: 0.4;
+      }
+
+      to {
+        opacity: 1;
+      }
+
+    }
+
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      margin-top: 100px;
+
+      text-align: center;
+
+      color: var(--pink);
+
+      letter-spacing: 3px;
+
+      font-size: 0.8rem;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 650px) {
+
+      .grid,
+      .links {
+        grid-template-columns: 1fr;
+      }
+
+      .sun {
+        width: 300px;
+        height: 300px;
+      }
+
+      .glitch {
+        letter-spacing: -3px;
+      }
+
+      .music {
+        align-items: flex-start;
+      }
+
+      .album {
+        width: 80px;
+        height: 80px;
+      }
+
+    }
+
+
+    /* Accessibility:
+       remove excessive animation if the user has requested
+       reduced motion on their device.
+    */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <!-- VHS EFFECTS -->
+
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <!-- MOVING FLOOR GRID -->
+
+  <div class="retro-grid"></div>
+
+
+  <main class="page">
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="hero">
+
+      <div class="sun"></div>
+
+      <div class="avatar-wrap">
+
+        <img
+          class="avatar"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS77kaRu026wt_pEM3c3WI4egFwN4ALL1JH9ydwAb3jlrjpl5wXxVfk9RPj&s=10"
+          alt="Profile picture"
+        >
+
+      </div>
+
+
+      <h1 class="glitch">
+        Shut the hell up
+      </h1>
+
+
+      <div class="username">
+        @Quigilist
+      </div>
+
+
+      <div class="status">
+
+        <div class="status-dot"></div>
+
+        Or Astryxiation I don't mind which one
+
+      </div>
+
+
+      <p class="hero-bio">
+        I spent way too long making this
+	because I wasn't satisfied with Strawpage
+	or Carrd.
+      </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ABOUT
+         ===================================================== -->
+
+    <section class="reveal">
+
+      <div class="card">
+
+        <h2>// Who the hell is this nerd</h2>
+
+        <p>
+          That's not very nice of you vro
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LINKS
+         ===================================================== -->
+
+    <section class="reveal-left">
+
+      <h1 class="section-title">
+        Links
+      </h1>
+
+
+      <div class="card">
+
+        <h2>// External Connections</h2>
+
+
+        <div class="links">
+
+          <a class="link" href="https://www.youtube.com/@Quigilist">
+            ▶ YouTube
+          </a>
+
+          <a class="link" href="discord.com/users/937596136628314133">
+            ◈ Discord
+          </a>
+
+          <a class="link" href="https://www.tiktok.com/@quigilist">
+            &lt;/&gt; TikTok
+          </a>
+
+          <a class="link" href="https://www.instagram.com/quigilist/">
+            ★ Instagram
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INFO
+         ===================================================== -->
+
+    <section class="grid">
+
+
+      <div class="card reveal-left">
+
+        <h2>// Interests</h2>
+
+        <div class="tags">
+
+          <span class="tag">HOTLINE MIAMI</span>
+
+          <span class="tag">TITANFALL</span>
+
+          <span class="tag">FAR CRY</span>
+
+          <span class="tag">LIMBUS COMPANY (I LARP)</span>
+
+          <span class="tag">JUJUTSU KAISEN</span>
+
+          <span class="tag">ENDACOPIA</span>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="card reveal-right">
+
+        <h2>// Current Status</h2>
+
+        <p>
+          CURRENTLY:
+          probably working on something
+          that should've been finished three weeks ago.
+	  I doubt this page will see many updates.
+        </p>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MUSIC
+         ===================================================== -->
+
+    <section class="reveal">
+
+      <h1 class="section-title">
+        Now Playing
+      </h1>
+
+
+      <div class="card">
+
+        <div class="music">
+
+          <img
+            class="album"
+            src="https://f4.bcbits.com/img/a4176824914_10.jpg"
+            alt="Album cover"
+          >
+
+
+          <div class="music-info">
+
+            <h3>
+              SICK OF IT
+            </h3>
+
+            <span>
+              FEMTANYL
+            </span>
+
+            <p style="margin-top: 12px;">
+              ♪ 01:47 ━━━━━━━○──── 03:10
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROJECTS
+         ===================================================== -->
+
+    <section class="reveal-right">
+
+      <h1 class="section-title">
+        Currently Playing Through
+      </h1>
+
+
+      <div class="card">
+
+
+        <div class="project">
+
+          <strong>
+            01 // Fallout 4
+          </strong>
+
+          <p>
+            I didn't realize you had to have the power armour to fight the Deathclaw. Whoops
+          </p>
+
+        </div>
+
+
+        <div class="project">
+
+          <strong>
+            02 // Ready Or Not
+          </strong>
+
+          <p>
+            My lazy bum friends won't hop on.
+          </p>
+
+        </div>
+
+
+        <div class="project">
+
+          <strong>
+            03 // Nothing Yet
+          </strong>
+
+          <p>
+            I'll get back to you on that.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RANDOM MESSAGE
+         ===================================================== -->
+
+    <section class="reveal">
+
+      <div
+        class="card"
+        style="text-align:center;"
+      >
+
+        <h2 id="randomMessage">
+          STAY OUT LATE.
+        </h2>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+      ASTRYXIATION.EXE
+
+      <br><br>
+
+      SITE CREATED // 2026
+
+    </footer>
+
+
+  </main>
+
+
+
+  <script>
+
+    /* =========================================================
+       SCROLL REVEAL
+       ========================================================= */
+
+    const revealElements =
+      document.querySelectorAll(
+        ".reveal, .reveal-left, .reveal-right"
+      );
+
+
+    const observer =
+      new IntersectionObserver(
+
+        (entries) => {
+
+          entries.forEach((entry) => {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("active");
+
+            }
+
+          });
+
+        },
+
+        {
+          threshold: 0.15
+        }
+
+      );
+
+
+    revealElements.forEach((element) => {
+
+      observer.observe(element);
+
+    });
+
+
+
+    /* =========================================================
+       PARALLAX SUN
+       ========================================================= */
+
+    const sun =
+      document.querySelector(".sun");
+
+
+    window.addEventListener(
+      "scroll",
+
+      () => {
+
+        const scroll =
+          window.scrollY;
+
+        sun.style.transform =
+          `translateY(${scroll * 0.18}px)`;
+
+      }
+    );
+
+
+
+    /* =========================================================
+       RANDOM MESSAGE
+       ========================================================= */
+
+    const messages = [
+
+      "DID I EVER TELL YOU THE DEFINITION OF INSANITY?",
+
+      "THE NIGHT IS YOUNG.",
+
+      "SHOW SOME GOD DAMN RESPECT.",
+
+      "IT'S ON THE HOUSE.",
+
+      "THIS PARTY STINKS.",
+
+      "DO YOU LIKE HURTING OTHER PEOPLE?",
+
+      "WELCOME BACK, PILOT.",
+
+      "THE SWORD IS YOURS, PILOT.",
+
+      "PROTOCOL 3."
+
+    ];
+
+
+    const randomMessage =
+      messages[
+        Math.floor(
+          Math.random() * messages.length
+        )
+      ];
+
+
+    document.getElementById(
+      "randomMessage"
+    ).textContent =
+      randomMessage;
+
+
+
+    /* =========================================================
+       RANDOM VHS GLITCH
+       ========================================================= */
+
+    const title =
+      document.querySelector(".glitch");
+
+
+    function glitch() {
+
+      const amount =
+        Math.random() * 8;
+
+
+      title.style.transform =
+        `translate(${amount}px, ${-amount / 2}px)`;
+
+
+      title.style.textShadow = `
+        ${amount}px 0 #ff2da6,
+        ${-amount}px 0 #00f6ff
+      `;
+
+
+      setTimeout(() => {
+
+        title.style.transform =
+          "translate(0)";
+
+        title.style.textShadow = `
+          5px 0 #ff2da6,
+          -5px 0 #00f6ff,
+          0 0 30px #ff2da6
+        `;
+
+      }, 80);
+
+    }
+
+
+    setInterval(() => {
+
+      if (Math.random() > 0.65) {
+        glitch();
+      }
+
+    }, 1800);
+
+  </script>
+
+</body>
+</html>
